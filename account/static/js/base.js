@@ -6,3 +6,12 @@ $('.message a').click(function(){
 
 
 //-----------------------------EndLogin-----------------------------
+
+
+$(document).ready(function(){
+    // Добавляем обработчик события click к кнопке с id "removeButton"
+    $("#closeButton").click(function(){
+        // Выберите элемент с классом "notification" и вызовите метод remove()
+        $("#screen").remove();
+    });
+});

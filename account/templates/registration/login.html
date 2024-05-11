@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Log-in{% endblock %}
+
+{% block content %}
+<div class="login-page">
+    {% if form.errors %}
+        {% include "account/includes/notification.html" with text_1="Your username and password didn't match." text_2="Please try again." %}
+    {% endif %}
+    <div class="form">
+        <form class="register-form" action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}" />
+            <input type="text" name="username" placeholder="username" />
+            <input type="text" name="email" placeholder="email address" />
+            <input type="password" name="password" placeholder="password" />
+            <input type="password" name="password_2" placeholder="password" />
+            <button>Create</button>
+            <p class="message">Already registered? <a href="#">Sign In</a></p>
+        </form>
+        <form class="login-form" action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}" />
+            <input type="text" name="username" placeholder="username" />
+            <input type="password" name="password" placeholder="password" />
+            <button>Login</button>
+            <p class="message">Not registered? <a href="#">Create an account</a></p>
+            <p class="message">Forgot your password? <a href="#">Recover</a></p>
+        </form>
+    </div>
+</div>
+{% endblock %}

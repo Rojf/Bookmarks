@@ -252,3 +252,113 @@ body {
 }
 
 /*------------------End Login------------------*/
+
+
+/*------------------Notification------------------*/
+
+#screen {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-top: 80px;
+    height: 400px;
+    width: 600px;
+}
+
+.notification {
+    height: 18%;
+    width: 85%;
+    background-color: #C1F7EE;
+    margin-top: 5%;
+    margin-left: 10%;
+    transform-origin: right;
+    -webkit-animation: notify 2000ms;
+    animation: notify 2000ms; /*ease-in-out infinite*/
+    border-radius: 6px;
+
+}
+
+@-webkit-keyframes notify {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+    transform: translateX(0%);
+    }
+}
+
+/*@keyframes notify {*/
+/*  0% {transform: scaleX(0);}*/
+/*  10% {transform: scaleX(1);}*/
+/*  13% {transform: scale(1.1);}*/
+/*  16% {transform: scale(1);}*/
+/*  55% {transform: scaleX(1); border-radius: 0%;}*/
+/*  65% {transform: scaleX(0.25); border-radius: 0%;}*/
+/*  95% {transform: scaleX(0.25); border-radius: 0%;}*/
+/*  100% {transform: scaleX(0);}*/
+/*}*/
+
+@keyframes notify {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+    transform: translateX(0%);
+    }
+}
+
+.text {
+    position: absolute;
+    height: 53px;
+    width: 430px;
+    background-color: #94DACD;
+    margin-top: 10px;
+    margin-left: 40px;
+    -webkit-animation: exit 2000ms;
+    animation: exit 2000ms;
+    font-size: 16px;
+    border-radius: 6px;
+}
+
+.text span {
+    margin-left: 25px;
+}
+
+@-webkit-keyframes exit {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+    transform: translateX(0%);
+    }
+}
+
+/*@keyframes exit {*/
+/*  0% {opacity: 1;}*/
+/*  55% {opacity: 1;}*/
+/*  65% {opacity: 0;}*/
+/*  100% {opacity: 0;}*/
+/*}*/
+
+@keyframes exit {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+    transform: translateX(0%);
+    }
+}
+
+#closeButton {
+    position: relative;
+    top: 5px;
+    left: 95%;
+    cursor: pointer;
+    -webkit-animation: exit 2000ms;
+    animation: exit 2000ms;
+}
+
+/*------------------End Notification------------------*/
+
+
+
