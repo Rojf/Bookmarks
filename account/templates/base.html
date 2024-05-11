@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static "css/base.css" %}" rel="stylesheet">
+</head>
+<body>
+    <div class="page">
+        <header class="page-header page-header_border-shadow">
+            <div class="page-header__inner">
+                <div class="page-header__top">
+                    <div class="page-header__logo">
+                        <a class="page-header__logo__link link" href="/" aria-label="My Blog">BookMarks</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="page-main page-main__font">
+            <div class="page-main__conntent">
+                <div class="page-main__content-wrap">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </main>
+        <footer class="page-footer page-footer_font">
+            <div class="page-footer__inner">
+                <div class="page-footer__top">
+                    <div class="page-footer__logo">
+                        <a class="page-footer__logo__link link" href="/" aria-label="My Blog">BookMarks</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="{% static "js/base.js" %}"></script>
+</body>
+</html>
