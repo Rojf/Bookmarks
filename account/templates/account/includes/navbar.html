@@ -1,0 +1,28 @@
+<header class="page-header page-header_border-shadow">
+    <div class="page-header__inner">
+        <div class="page-header__top">
+            <div class="page-header__logo">
+                <a class="page-header__logo__link link" href="/" aria-label="My Blog">BookMarks</a>
+            </div>
+            <div>
+                {% if request.user.is_authenticated %}
+                <nav>
+                    <a href="{% url "dashboard" %}">My dashboard</a>
+                    <a href="#">Images</a>
+                    <a href="#">People</a>
+<!--                    <a href="{% url "logout" %}">Log-out</a>-->
+                    <button id="logoutButton" type="submit" data-csrf="{{ csrf_token }}">Log out</button>
+                    {% if section == "dashboard" %}<div class="animation start-dashboard"></div>{% endif %}-->
+                    {% if section == "image" %}<div class="animation start-images"></div>{% endif %}
+                    {% if section == "people" %}<div class="animation start-people"></div>{% endif %}
+                </nav>
+                {% else %}
+                <nav>
+                    <a class="nav-link" href="{% url "login" %}">Login</a>
+                    <div class="animation"></div>
+                </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>
