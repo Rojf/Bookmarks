@@ -7,18 +7,20 @@
             <div>
                 {% if request.user.is_authenticated %}
                 <nav>
-                    <a href="{% url "dashboard" %}">My dashboard</a>
+                    <a href="{% url 'dashboard' %}">My dashboard</a>
                     <a href="#">Images</a>
                     <a href="#">People</a>
+                    <a href="{% url 'settings' %}">settings</a>
 <!--                    <a href="{% url "logout" %}">Log-out</a>-->
-                    <button id="logoutButton" type="submit" data-csrf="{{ csrf_token }}">Log out</button>
-                    {% if section == "dashboard" %}<div class="animation start-dashboard"></div>{% endif %}-->
-                    {% if section == "image" %}<div class="animation start-images"></div>{% endif %}
-                    {% if section == "people" %}<div class="animation start-people"></div>{% endif %}
+                    <input id="logoutButton" class="btn btn-primary" type="submit" data-csrf="{{ csrf_token }}" value="Log out">Log out</input>
+                    {% if section == "dashboard" %}<div class="btn btn-primary animation start-dashboard"></div>{% endif %}-->
+                    {% if section == "image" %}<div class="btn btn-primary animation start-images"></div>{% endif %}
+                    {% if section == "people" %}<div class="btn btn-primary animation start-people"></div>{% endif %}
+                    {% if section == "settings" %}<div class="btn btn-primary animation start-settings"></div>{% endif %}
                 </nav>
                 {% else %}
                 <nav>
-                    <a class="nav-link" href="{% url "login" %}">Login</a>
+                    <a class="btn btn-primary nav-link" href="{% url 'login' %}">Login</a>
                     <div class="animation"></div>
                 </nav>
                 {% endif %}

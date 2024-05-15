@@ -3,12 +3,19 @@
 {% block title %}Log-in{% endblock %}
 
 {% block content %}
+
+{% if form.errors %}
+    {% include "account/includes/notification.html" with text_1="Your username and password didn't match." text_2="Please try again." %}
+{% endif %}
+{% if messages %}
+    {% for message in messages %}
+<!--        <div id="successMessage" style="display: none;">{{ message }}</div>-->
+        {% include "account/includes/notification.html" with text_1=message text_2="" %}
+    {% endfor %}
+{% endif %}
 <div class="login-page">
-    {% if form.errors %}
-        {% include "account/includes/notification.html" with text_1="Your username and password didn't match." text_2="Please try again." %}
-    {% endif %}
     <div class="form">
-        <form class="register-form" action="{% url 'login' %}" method="post">
+        <form class="register-form" action="" method="post">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}" />
             <input type="text" name="username" placeholder="username" />
@@ -16,7 +23,15 @@
             <input type="password" name="password" placeholder="password" />
             <input type="password" name="password_2" placeholder="password" />
             <button>Create</button>
-            <p class="message">Already registered? <a href="#">Sign In</a></p>
+            <p class="message">Already registered? <a data-toggle='{"param1": ".login-form", "param2": ".register-form"}' href="#">Sign In</a></p>
+        </form>
+        <form class="password-recovery-form" action="{% url 'password_reset' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}" />
+            <input type="email" name="email" placeholder="E-mail" autocomplete="email" maxlength="254" required="" aria-invalid="true">
+<!--            <input type="email" name="email"  />-->
+            <button>Forgot</button>
+            <p class="message">Already registered? <a data-toggle='{"param1": ".login-form", "param2": ".password-recovery-form"}' href="#">Sign In</a></p>
         </form>
         <form class="login-form" action="{% url 'login' %}" method="post">
             {% csrf_token %}
@@ -24,8 +39,8 @@
             <input type="text" name="username" placeholder="username" />
             <input type="password" name="password" placeholder="password" />
             <button>Login</button>
-            <p class="message">Not registered? <a href="#">Create an account</a></p>
-            <p class="message">Forgot your password? <a href="#">Recover</a></p>
+            <p class="message">Not registered? <a data-toggle='{"param1": ".register-form", "param2": ".login-form"}' href="#">Create an account</a></p>
+            <p class="message">Forgot your password? <a data-toggle='{"param1": ".password-recovery-form", "param2": ".login-form", "param3": ".register-form"}' href="#password-reset">Recover</a></p>
         </form>
     </div>
 </div>
