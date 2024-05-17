@@ -36,9 +36,9 @@ class SettingView(View):
     def get(self, request):
         context = {
             'section': 'settings',
-            'profile': services.get_profile(user=request.user.id),
-            'info_user': services.get_info_user(user=request.user),
-            'social_media_user': services.get_social_media_user(user=request.user.id),
+            'profile': Repository.ProfileRepository.get(user=request.user),
+            'info_user': Repository.InfoUserRepository.get(user=request.user),
+            'social_media_user': Repository.SocialMediaUserRepository.get(user=request.user.id),
             'countries': list(countries)}
 
         return render(request, 'account/settings.html',

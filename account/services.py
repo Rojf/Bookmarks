@@ -21,10 +21,6 @@ def social_media_form(data):
     return account_forms.SocialMediaUserForm(data)
 
 
-def get_user(*args, **kwargs):
-    return UserRepository.get(*args, **kwargs)
-
-
 def user_create(cleaned_data):
     username = cleaned_data.get('username')
     email = cleaned_data.get('email')
@@ -39,41 +35,16 @@ def user_create(cleaned_data):
     create_social_media_user(user)
 
 
-def get_profile(*args, **kwargs):
-    return ProfileRepository.get(*args, **kwargs)
-
-
 def create_profile(*args, **kwargs):
     return ProfileRepository.create(*args, **kwargs)
-
-
-def edit_profile(instance, *args, **kwargs):
-    UserRepository.update(instance,)
-    return ProfileRepository.update(instance, *args, **kwargs)
-
-
-def get_info_user(*args, **kwargs):
-    return InfoUserRepository.get(*args, **kwargs)
 
 
 def create_info_user(*args, **kwargs):
     return InfoUserRepository.create(*args, **kwargs)
 
 
-def edit_info_user(instance, *args, **kwargs):
-    return InfoUserRepository.update(instance, *args, **kwargs)
-
-
-def get_social_media_user(*args, **kwargs):
-    return SocialMediaUserRepository.get(*args, **kwargs)
-
-
 def create_social_media_user(*args, **kwargs):
     return SocialMediaUserRepository.create(*args, **kwargs)
-
-
-def edit_social_media_user(instance, *args, **kwargs):
-    return SocialMediaUserRepository.update(instance, *args, **kwargs)
 
 
 def clean_password2(self):
