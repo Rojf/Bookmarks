@@ -1,4 +1,5 @@
-from account.repositories.Repository import UserRepository
+from account.repositories.Repository import (UserRepository, ProfileRepository, InfoUserRepository,
+                                             SocialMediaUserRepository)
 
 
 class EmailAuthBackend:
@@ -19,3 +20,9 @@ class EmailAuthBackend:
             return UserRepository.get(pk=user_id)
         except UserRepository.model.DoesNotExist:
             return None
+
+
+def create_profile(backend, user, *args, **kwargs):
+    ProfileRepository.model.objects.get_or_create(user=user)
+    InfoUserRepository.model.objects.get_or_create(user=user)
+    SocialMediaUserRepository.model.objects.get_or_create(user=user)
