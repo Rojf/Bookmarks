@@ -8,9 +8,11 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_protect
 
-from account import services
-from account.repositories import Repository
 from django_countries import countries
+
+from account.repositories import Repository
+from account import services
+from account import forms
 
 
 @login_required
@@ -20,9 +22,9 @@ def dashboard(request):
 
 class SettingView(View):
     success_url = '/account/settings/'
-    form_types = {'social_media_user': services.social_media_form,
-                  'profile': services.profile_form,
-                  'info_user': services.info_user_form}
+    form_types = {'social_media_user': forms.SocialMediaUserForm,
+                  'profile': forms.ProfileForm,
+                  'info_user': forms.InfoUserForm}
 
     models = {'social_media_user': Repository.SocialMediaUserRepository,
               'profile': Repository.ProfileRepository,
@@ -125,7 +127,7 @@ class UserRegistration(View):
     success_url = '/account/login/'
 
     def post(self, request):
-        user_form = services.get_registration_form(request)
+        user_form = forms.RegistrationForm(request.POST)
 
         if (user_form.is_valid() and services.clean_username(user_form) and services.clean_email(user_form) and
                 services.clean_password2(user_form)):

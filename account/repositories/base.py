@@ -17,7 +17,7 @@ class BaseRepository:
 
     @classmethod
     def create(cls, *args, **kwargs):
-        return cls.model.objects.create(*args, **kwargs)
+        return cls.model.objects.get_or_create(*args, **kwargs)
 
     @classmethod
     def update(cls, instance, *args, **kwargs):

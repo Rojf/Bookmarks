@@ -23,7 +23,7 @@ class InfoUserForm(forms.Form):
     bio = forms.CharField(max_length=2000, required=False)
     birthday = forms.DateField(required=False)
     country = CountryField().formfield(required=False)
-    phone_number = forms.RegexField(regex=r'^\+?1?\d{9,15}$', max_length=15, required=False)
+    phone_number = forms.RegexField(regex=r'(?:([+]\d{1,4})[-.\s]?)?(?:[(](\d{1,3})[)][-.\s]?)?(\d{1,4})[-.\s]?(\d{1,4})[-.\s]?(\d{1,9})', max_length=15, required=False)
 
 
 class SocialMediaUserForm(forms.Form):

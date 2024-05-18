@@ -19,9 +19,9 @@ class InfoUser(models.Model):
     bio = models.TextField(max_length=2000, blank=True)
     birthday = models.DateField(null=True, blank=True)
     country = CountryField(blank=True)
-    phone_number = models.CharField(validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$')], max_length=15, blank=True,
-                                    unique=True)
-
+    phone_number = models.CharField(validators=[RegexValidator(regex=r'(?:([+]\d{1,4})[-.\s]?)?(?:[(](\d{1,3})[)][-.\s]?)?(\d{1,4})[-.\s]?(\d{1,4})[-.\s]?(\d{1,9})')], max_length=15, null=True,
+                                    blank=True, unique=True)
+    regex = r'^\+?[0-9]'
     def __str__(self):
         return f'Profile of {self.user.username}'
 
