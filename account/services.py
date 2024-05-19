@@ -1,7 +1,7 @@
 from django.contrib.auth import forms
 
-from account.repositories.Repository import (UserRepository, ProfileRepository, InfoUserRepository,
-                                             SocialMediaUserRepository)
+from account.repositories.Repository import ProfileRepository, InfoUserRepository, SocialMediaUserRepository
+from core.repositories.Repository import UserRepository
 
 
 def user_create(cleaned_data):

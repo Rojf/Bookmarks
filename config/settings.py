@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_countries',
     'social_django',
     'django_extensions',
+    'images.apps.ImagesConfig',
 ]
 
 MIDDLEWARE = [

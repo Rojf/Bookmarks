@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_protect
 
 from django_countries import countries
 
+from core.repositories.Repository import UserRepository
 from account.repositories import Repository
 from account import services
 from account import forms
@@ -59,7 +60,7 @@ class SettingView(View):
 
                 if form_type == 'profile':
                     cd['photo'] = request.FILES.get('photo')
-                    Repository.UserRepository.update(request.user, **cd)
+                    UserRepository.update(request.user, **cd)
 
                 obj = model_update_repository.get(user=request.user)
                 model_update_repository.update(obj, **cd)

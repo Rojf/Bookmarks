@@ -1,5 +1,4 @@
-from account.repositories.Repository import (UserRepository, ProfileRepository, InfoUserRepository,
-                                             SocialMediaUserRepository)
+from core.repositories.Repository import UserRepository
 
 
 class EmailAuthBackend:

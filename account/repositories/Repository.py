@@ -1,20 +1,16 @@
 from django.contrib.auth.models import User
 
+from core.repositories.base import BaseRepository
 from account.models import Profile, InfoUser, SocialMediaUser
-from . import base
 
 
-class UserRepository(base.BaseRepository):
-    model = User
-
-
-class ProfileRepository(base.BaseRepository):
+class ProfileRepository(BaseRepository):
     model = Profile
 
 
-class InfoUserRepository(base.BaseRepository):
+class InfoUserRepository(BaseRepository):
     model = InfoUser
 
 
-class SocialMediaUserRepository(base.BaseRepository):
+class SocialMediaUserRepository(BaseRepository):
     model = SocialMediaUser
