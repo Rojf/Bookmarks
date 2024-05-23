@@ -12,8 +12,8 @@ from django.views.decorators.http import require_POST
 from django_countries import countries
 
 from core.repositories.Repository import UserRepository
-from actions.utils import create_action
-from actions.repositories import Repository
+from core.utils import create_action
+from actions.repositories.Repository import ActionRepository
 from account.repositories import Repository
 from account import services
 from account import forms
@@ -21,12 +21,16 @@ from account import forms
 
 @login_required
 def dashboard(request):
-    actions = Repository.ActionRepository.model.objects.exclude(user=request.user)
+    actions = ActionRepository.model.objects.exclude(user=request.user)
+
     following_ids = request.user.following.values_list('id', flat=True)
 
     if following_ids:
-        actions = actions.fillter(user_id__in=following_ids)
-    actions = actions.select_related('user', 'user__profile')[:10]
+        actions = actions.filter(user_id__in=following_ids)
+    print("actions_213", actions)
+
+    actions = actions.select_related('user', 'user__profile')[:10].prefetch_related('target')[:10]
+    print("actions_213", following_ids)
     return render(request, 'account/dashboard.html', {'section': 'dashboard', 'actions': actions})
 
 

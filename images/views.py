@@ -14,7 +14,7 @@ import requests
 
 from images.forms import ImageCreateForm
 from images.repositories.Repository import ImagesRepository
-from actions.utils import create_action
+from core.utils import create_action
 
 
 class ImageCreateViews(View):
