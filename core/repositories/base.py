@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class BaseRepository:
     model = None
+
     @classmethod
     def get(cls, *args, **kwargs):
         try:
@@ -13,6 +14,10 @@ class BaseRepository:
     @classmethod
     def all(cls, *args, **kwargs):
         return cls.model.objects.all(*args, **kwargs)
+
+    @classmethod
+    def filter(cls, *args, **kwargs):
+        return cls.model.objects.filter(*args, **kwargs)
 
     @classmethod
     def create(cls, *args, **kwargs):

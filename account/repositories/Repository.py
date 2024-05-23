@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 
 from core.repositories.base import BaseRepository
-from account.models import Profile, InfoUser, SocialMediaUser
+from account.models import Profile, InfoUser, SocialMediaUser, Contact
 
 
 class ProfileRepository(BaseRepository):
@@ -14,3 +14,7 @@ class InfoUserRepository(BaseRepository):
 
 class SocialMediaUserRepository(BaseRepository):
     model = SocialMediaUser
+
+
+class ContactRepository(BaseRepository):
+    model = Contact

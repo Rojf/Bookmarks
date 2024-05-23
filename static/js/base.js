@@ -90,7 +90,7 @@ var element = document.getElementById("logoutButton");
 
 if (element) {
     document.getElementById("logoutButton").addEventListener("click", function() {
-      var csrfToken = this.dataset.csrf;
+      const csrftoken = Cookies.get('csrftoken');
       fetch("/account/logout/", {
         method: "POST",
         headers: {
@@ -154,3 +154,5 @@ if (currentPath === '#account-change-password') {
 }
 
 //-------------------------------End Settings Tabs-------------------------------
+
+

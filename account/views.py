@@ -1,12 +1,13 @@
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_POST
 
 from django_countries import countries
 
@@ -141,5 +142,35 @@ class UserRegistration(View):
             # messages.success(self.request, )
 
         return HttpResponseRedirect(self.success_url)
-
 # Mark1q2w3e4r
+
+
+@login_required
+def user_list(request):
+    users = UserRepository.filter(is_active=True)
+    return render(request, 'account/user/list.html', {'section': 'people', 'users': users})
+
+
+@login_required
+def user_detail(request, username):
+    user = get_object_or_404(UserRepository.model, username=username, is_active=True)
+    return render(request, 'account/user/detail.html', {'section': 'people', 'user': user})
+
+
+@require_POST
+@login_required
+def user_follow(request):
+    user_id = request.POST.get('id')
+    active = request.POST.get('active')
+    if user_id and active:
+        try:
+            user = UserRepository.get(id=user_id)
+            if active == 'follow':
+                Repository.ContactRepository.create(user_from=request.user, user_to=user)
+            elif active == 'unfollow':
+                Repository.ContactRepository.filter(user_from=request.user, user_to=user).delete()
+            return JsonResponse({'status': 'ok'})
+        except UserRepository.model.DoesNotExist:
+            return JsonResponse({'status': 'error'})
+
+    return JsonResponse({'status': 'error'})

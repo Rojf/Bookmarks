@@ -1,0 +1,21 @@
+.col-0 {
+    padding: 0 20px !important;
+}
+
+
+.image-likes-count {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-top: 20px;
+}
+
+.image-likes {
+    width: auto;
+    max-height: 180px;
+    margin-right: 25px;
+}
+
+.ml-2 {
+    margin-left: 25px;
+}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block title %}People{% endblock %}
+
+{% block content %}
+  <h1>People</h1>
+  <div id="people-list">
+    {% for user in users %}
+      <div class="user">
+        <a href="{{ user.get_absolute_url }}">
+            {% if user.profile.photo %}
+                <img src="{% thumbnail user.profile.photo 180x180 %}">
+            {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                </svg>
+            {% endif %}
+        </a>
+        <div class="info">
+          <a href="{{ user.get_absolute_url }}" class="title">
+            {{ user.get_full_name }}
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
