@@ -23,6 +23,7 @@ class InfoUser(models.Model):
     phone_number = models.CharField(validators=[RegexValidator(regex=r'(?:([+]\d{1,4})[-.\s]?)?(?:[(](\d{1,3})[)][-.\s]?)?(\d{1,4})[-.\s]?(\d{1,4})[-.\s]?(\d{1,9})')], max_length=15, null=True,
                                     blank=True, unique=True)
     regex = r'^\+?[0-9]'
+
     def __str__(self):
         return f'Profile of {self.user.username}'
 

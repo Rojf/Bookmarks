@@ -3,16 +3,6 @@
 {% block title %}Log-in{% endblock %}
 
 {% block content %}
-
-{% if form.errors %}
-    {% include "includes/notification.html" with text_1="Your username and password didn't match." text_2="Please try again." %}
-{% endif %}
-{% if messages %}
-    {% for message in messages %}
-<!--        <div id="successMessage" style="display: none;">{{ message }}</div>-->
-        {% include "includes/notification.html" with text_1=message text_2="" %}
-    {% endfor %}
-{% endif %}
 <div class="login-page">
     <div class="form">
         <form class="register-form" action="{% url 'sign_up' %}" method="post">

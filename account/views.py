@@ -12,6 +12,8 @@ from django.views.decorators.http import require_POST
 from django_countries import countries
 
 from core.repositories.Repository import UserRepository
+from actions.utils import create_action
+from actions.repositories import Repository
 from account.repositories import Repository
 from account import services
 from account import forms
@@ -19,7 +21,13 @@ from account import forms
 
 @login_required
 def dashboard(request):
-    return render(request, 'account/dashboard.html', {'section': 'dashboard'})
+    actions = Repository.ActionRepository.model.objects.exclude(user=request.user)
+    following_ids = request.user.following.values_list('id', flat=True)
+
+    if following_ids:
+        actions = actions.fillter(user_id__in=following_ids)
+    actions = actions.select_related('user', 'user__profile')[:10]
+    return render(request, 'account/dashboard.html', {'section': 'dashboard', 'actions': actions})
 
 
 class SettingView(View):
@@ -134,12 +142,18 @@ class UserRegistration(View):
         if (user_form.is_valid() and services.clean_username(user_form) and services.clean_email(user_form) and
                 services.clean_password2(user_form)):
             cd = user_form.cleaned_data
-            services.user_create(cd)
-            print("here")
+
+            user = services.user_create(cd)
+
+            Repository.ProfileRepository.create(user=user)
+            Repository.InfoUserRepository.create(user=user)
+            Repository.SocialMediaUserRepository.create(user=user)
+
+            create_action(user, 'has created an account')
+            messages.success(self.request, 'You have created an account.')
         else:
             print("Not valid")
-            print(user_form.errors)
-            # messages.success(self.request, )
+            # messages.warning(self.request, 'Data not valid')
 
         return HttpResponseRedirect(self.success_url)
 # Mark1q2w3e4r
@@ -167,6 +181,7 @@ def user_follow(request):
             user = UserRepository.get(id=user_id)
             if active == 'follow':
                 Repository.ContactRepository.create(user_from=request.user, user_to=user)
+                create_action(request.user, 'is following', user)
             elif active == 'unfollow':
                 Repository.ContactRepository.filter(user_from=request.user, user_to=user).delete()
             return JsonResponse({'status': 'ok'})

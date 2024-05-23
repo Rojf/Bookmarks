@@ -40,10 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'images.apps.ImagesConfig',
+    'actions.apps.ActionsConfig',
     'django_countries',
     'social_django',
     'django_extensions',
-    'images.apps.ImagesConfig',
     'easy_thumbnails',
 ]
 

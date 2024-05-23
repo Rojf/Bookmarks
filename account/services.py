@@ -8,14 +8,12 @@ def user_create(cleaned_data):
     username = cleaned_data.get('username')
     email = cleaned_data.get('email')
     firstname = cleaned_data.get('firstname')
-    password = cleaned_data.get('password')
+    password = cleaned_data.get('password1')
 
-    user = UserRepository.model.objects.create_user(username, email, password, first_name=firstname)
+    user = UserRepository.create_user(username, email, password, first_name=firstname)
     user.save()
 
-    create_profile(user)
-    create_info_user(user)
-    create_social_media_user(user)
+    return user
 
 
 def create_profile(*args, **kwargs):
