@@ -20,7 +20,7 @@
                 <div class="image-likes-count">
                     <div class="image-likes overflow-auto">
                         {% for user in image.users_like.all %}
-                            <div>
+                            <div style="margin-top: 10px;">
                                 {% if user.profile.photo %}
                                     <img src="{{ user.profile.photo.url }}" alt="" width="40" height="40" class="rounded-circle">
                                 {% else %}
@@ -35,9 +35,17 @@
                             <h5 class="ml-2">Nobody likes this image yet.</h5>
                         {% endfor %}
                     </div>
-                    <button type="button" class="btn btn-primary" data-id="{{ image.id }}" data-action="{% if request.user in users_like %}un{% endif %}like">
-                        <span class="like">{% if request.user not in users_like %}Like{% else %}Unlike{% endif %}</span> <span class="badge badge-light">{{ total_likes }}</span>
-                    </button>
+                    <div>
+                        <button class="btn btn-primary" style="pointer-events: none; cursor: not-allowed;">
+                            <span class="like">view{{ total_views|pluralize }}</span>
+                            <span class="badge badge-light">{{ total_views }}</span>
+                        </button>
+                        <button type="button" class="btn btn-primary" data-id="{{ image.id }}" data-action="{% if request.user in users_like %}un{% endif %}like">
+                            <span class="like">{% if request.user not in users_like %}Like{% else %}Unlike{% endif %}</span>
+                            <span class="badge badge-light">{{ total_likes }}</span>
+                        </button>
+                    </div>
+
                 </div>
             {% endwith %}
         </div>

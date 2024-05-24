@@ -9,12 +9,17 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
 from django.views import View
 from django.http import JsonResponse, HttpResponse
+from django.conf import settings
 
+import redis
 import requests
 
 from images.forms import ImageCreateForm
 from images.repositories.Repository import ImagesRepository
 from core.utils import create_action
+
+
+r = redis.Redis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB)
 
 
 class ImageCreateViews(View):
@@ -63,7 +68,9 @@ class ImageCreateViews(View):
 @login_required
 def image_detail(request, id, slug):
     image = get_object_or_404(ImagesRepository.model, id=id, slug=slug)
-    return render(request, 'images/image/detail.html', {'section': 'images', 'image': image})
+    total_views = r.incr(f'image:{image.id}:views')
+    return render(request, 'images/image/detail.html', {'section': 'images', 'image': image,
+                                                        'total_views': total_views})
 
 
 @login_required

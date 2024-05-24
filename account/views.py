@@ -165,11 +165,7 @@ class UserRegistration(View):
 
 @login_required
 def user_list(request):
-    from django.contrib.auth.models import User
-    users = User.objects.select_related('profile').filter(is_active=True)
-    # users = User.objects.filter(is_active=True)
-    print(users)
-    # users = UserRepository.filter(is_active=True)
+    users = UserRepository.filter(is_active=True, select_related=['profile'])
     return render(request, 'account/user/list.html', {'section': 'people', 'users': users})
 
 
