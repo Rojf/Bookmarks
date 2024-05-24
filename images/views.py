@@ -67,8 +67,10 @@ class ImageCreateViews(View):
 
 @login_required
 def image_detail(request, id, slug):
-    image = get_object_or_404(ImagesRepository.model, id=id, slug=slug)
+    # image = get_object_or_404(ImagesRepository.model, id=id, slug=slug)
+    image = ImagesRepository.get(id=id, slug=slug, select_related=['user'], prefetch_related=['users_like'])
     total_views = r.incr(f'image:{image.id}:views')
+    r.zincrby('image_ranking', 1, image.id)
     return render(request, 'images/image/detail.html', {'section': 'images', 'image': image,
                                                         'total_views': total_views})
 
@@ -116,3 +118,14 @@ def images_list(request):
         return render(request,'images/image/list_images.html', {'section': 'images', 'images': images})
 
     return render(request, 'images/image/list.html', {'section': 'images', 'images': images})
+
+
+@login_required
+def image_ranking(request):
+    image_ranking = r.zrange('image_ranking', 0, -1, desc=True)[:10]
+    image_ranking_ids = [int(id) for id in image_ranking]
+    most_viewed = list(ImagesRepository.filter(id__in=image_ranking_ids))
+    most_viewed.sort(key=lambda x: image_ranking_ids.index(x.id))
+
+    return render(request, 'images/image/ranking.html',
+                  {'section': 'images', 'most_viewed': most_viewed})
